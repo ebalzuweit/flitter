@@ -1,4 +1,6 @@
 using System.Collections.Concurrent;
+using Dapper;
+using flitter.Data.Dapper;
 using Microsoft.Data.Sqlite;
 
 namespace flitter;
@@ -18,6 +20,8 @@ public class FlitterContext : IDisposable, IAsyncDisposable
 	public FlitterContext(string connectionString, bool inMemory = false)
 	{
 		_connectionString = connectionString;
+
+		SqlMapper.AddTypeHandler(new GuidHandler());
 
 		if (inMemory)
 		{
