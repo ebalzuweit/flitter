@@ -7,7 +7,7 @@
 			"type": "process",
 			"args": [
 				"build",
-				"${workspaceFolder}/src/flitter.Tests/flitter.Tests.csproj",
+				"${workspaceFolder}/tests/flitter.Tests/flitter.Tests.csproj",
 				"/property:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],
