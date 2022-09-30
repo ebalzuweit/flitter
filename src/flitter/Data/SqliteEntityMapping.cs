@@ -2,21 +2,27 @@ using System.Reflection;
 
 namespace flitter.Data;
 
-public class SqliteEntityMapping<T>
-	where T : new()
+public class SqliteEntityMapping
 {
 	public string TableName { get; init; }
 	public SqliteColumnMapping[] Columns { get; init; }
 
-	public SqliteEntityMapping()
+	public SqliteEntityMapping(Type type)
 	{
-		TableName = typeof(T).Name;
-		Columns = GetColumnMappings().ToArray();
+		if (type.IsValueType)
+			throw new ArgumentException("Type must be a reference type.");
+		if (type.IsAbstract)
+			throw new ArgumentException("Type must be concrete.");
+		if (type.GetConstructor(Type.EmptyTypes) is null)
+			throw new ArgumentException("Type must have a public, empty constructor.");
+
+		TableName = type.Name;
+		Columns = GetColumnMappings(type).ToArray();
 	}
 
-	private IEnumerable<SqliteColumnMapping> GetColumnMappings()
+	private IEnumerable<SqliteColumnMapping> GetColumnMappings(Type type)
 	{
-		var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+		var props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 		return props.Select(propInfo => SqliteColumnMapping.FromPropertyInfo(propInfo));
 	}
 }

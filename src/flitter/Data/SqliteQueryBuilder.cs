@@ -5,11 +5,11 @@ namespace flitter.Data;
 public class SqliteQueryBuilder<T>
 	where T : new()
 {
-	private readonly SqliteEntityMapping<T> _mapping;
+	private readonly SqliteEntityMapping _mapping;
 
 	public SqliteQueryBuilder()
 	{
-		_mapping = new SqliteEntityMapping<T>();
+		_mapping = new SqliteEntityMapping(typeof(T));
 	}
 
 	public string CreateTableScript()
