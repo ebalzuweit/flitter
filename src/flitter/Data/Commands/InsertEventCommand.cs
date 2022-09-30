@@ -2,7 +2,7 @@ using Dapper;
 using flitter.Events;
 using Microsoft.Data.Sqlite;
 
-namespace flitter.Data;
+namespace flitter.Data.Commands;
 
 public class InsertEventCommand : ICommand
 {
