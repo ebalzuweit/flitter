@@ -19,7 +19,7 @@ public class CreateDatabaseCommand : ICommand<bool>
 
 	public async Task EnableWriteAheadLogging(SqliteConnection connection, CancellationToken cancellationToken)
 	{
-		await connection.ExecuteAsync("PRAGMA journal_mode = 'wal'").ConfigureAwait(false);
+		await connection.ExecuteAsync("PRAGMA journal_mode = 'wal'", cancellationToken).ConfigureAwait(false);
 	}
 
 	public async Task CreateEventsTable(DbConnection connection, CancellationToken cancellationToken)
