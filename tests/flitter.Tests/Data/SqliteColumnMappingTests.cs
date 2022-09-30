@@ -66,9 +66,7 @@ public class SqliteColumnMappingTests
 	[Fact]
 	public void Ctor_ThrowsNotSupportedException_IfByteArray()
 	{
-		var mapping = new SqliteColumnMapping("!@#$%", typeof(byte[]));
-
-		var act = () => mapping.SqliteType;
+		var act = () => new SqliteColumnMapping("!@#$%", typeof(byte[]));
 
 		var excp = Assert.Throws<NotSupportedException>(act);
 		Assert.Contains("BLOB data type is not supported yet.", excp.Message);

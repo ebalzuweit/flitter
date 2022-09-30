@@ -7,11 +7,10 @@ public class SqliteColumnMapping
 {
 	public string Name { get; init; }
 	public Type Type { get; init; }
+	public string SqliteType { get; init; }
 	public bool NotNull { get; init; }
 	public bool IsPrimaryKey { get; init; }
 	public bool AutoIncrement { get; init; }
-
-	public string SqliteType => GetSqliteColumnType(Type);
 
 	public SqliteColumnMapping(string name, Type type, bool notNull = false, bool isPrimaryKey = false, bool autoIncrement = false)
 	{
@@ -22,6 +21,7 @@ public class SqliteColumnMapping
 
 		Name = name;
 		Type = type ?? throw new ArgumentNullException(nameof(type));
+		SqliteType = GetSqliteColumnType(type);
 		NotNull = notNull;
 		IsPrimaryKey = isPrimaryKey;
 		AutoIncrement = autoIncrement;
