@@ -4,15 +4,16 @@ public sealed class EventHub
 {
 	private readonly List<EventSubscription> _subscriptions = new();
 
-	public async Task Publish(Event @event)
+	public async Task Publish(IEvent @event)
 	{
-		var tasks = _subscriptions.Select(x => x.Handler(@event));
+		var tasks = _subscriptions.Where(x => x.Predicate(@event))
+			.Select(x => x.Handler(@event));
 		await Task.WhenAll(tasks);
 	}
 
-	public SubscriptionToken Subscribe(Func<Event, Task> handler)
+	public SubscriptionToken Subscribe(Func<IEvent, Task> handler, Func<IEvent, bool>? predicate = null)
 	{
-		var subscription = new EventSubscription(handler);
+		var subscription = new EventSubscription(handler, predicate);
 		_subscriptions.Add(subscription);
 		return subscription.Token;
 	}
@@ -22,4 +23,6 @@ public sealed class EventHub
 		var removed = _subscriptions.RemoveAll(subscription => subscription.Token.Value == token.Value);
 		return removed > 0;
 	}
+
+	private bool DefaultPredicate(Event @event) => true;
 }
