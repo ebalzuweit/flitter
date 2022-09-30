@@ -8,8 +8,8 @@ public class FlitterContextTests
 	[Fact]
 	public async Task PerformDatabaseTests()
 	{
+		const string filename = "flitter.db";
 		var @event = new Event();
-		var filename = "flitter.db";
 
 		// setup in-memory database
 		FlitterContext ctx = new();
