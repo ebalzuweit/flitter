@@ -2,7 +2,7 @@ using flitter.Data;
 using flitter.Data.Commands;
 using flitter.Events;
 
-namespace flitter.Tests;
+namespace flitter.Tests.Data;
 
 public class FlitterContextTests
 {
