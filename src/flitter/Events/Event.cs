@@ -1,10 +1,13 @@
 namespace flitter.Events;
 
-public record Event
+public record Event : IEvent
 {
-	public long Id { get; init; }
 	public Guid Guid { get; init; }
-	public DateTime CreatedAt { get; init; }
-	public string? EventType { get; init; }
-	public string? EventMessage { get; init; }
+	public DateTimeOffset CreatedAt { get; init; }
+
+	public Event()
+	{
+		Guid = Guid.NewGuid();
+		CreatedAt = DateTimeOffset.Now;
+	}
 }
