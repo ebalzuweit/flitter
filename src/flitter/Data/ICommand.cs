@@ -1,6 +1,6 @@
 using Microsoft.Data.Sqlite;
 
-namespace flitter;
+namespace flitter.Data;
 
 public interface ICommand<TResult>
 {

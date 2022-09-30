@@ -3,7 +3,7 @@ using Dapper;
 using flitter.Data.Dapper;
 using Microsoft.Data.Sqlite;
 
-namespace flitter;
+namespace flitter.Data;
 
 public class FlitterContext : IDisposable, IAsyncDisposable
 {
@@ -22,6 +22,7 @@ public class FlitterContext : IDisposable, IAsyncDisposable
 		_connectionString = connectionString;
 
 		SqlMapper.AddTypeHandler(new GuidHandler());
+		SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
 
 		if (inMemory)
 		{
