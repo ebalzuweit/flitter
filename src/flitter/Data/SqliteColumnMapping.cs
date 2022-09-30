@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace flitter.Data.Internal;
+namespace flitter.Data;
 
 public class SqliteColumnMapping
 {

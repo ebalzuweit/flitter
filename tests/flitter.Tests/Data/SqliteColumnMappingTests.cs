@@ -1,8 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using flitter.Data;
-using flitter.Data.Internal;
 
-namespace flitter.Tests.Data.Internal;
+namespace flitter.Tests.Data;
 
 public class SqliteColumnMappingTests
 {

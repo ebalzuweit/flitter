@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace flitter.Data.Internal;
+namespace flitter.Data;
 
 public class SqliteEntityMapping<T>
 	where T : new()
