@@ -12,14 +12,14 @@ public class FlitterContextTests
 		var @event = new Event();
 
 		// setup in-memory database
-		FlitterContext ctx = new();
+		await using FlitterContext ctx = new();
 		await ctx.ExecuteAsync(new CreateDatabaseCommand());
 		await ctx.ExecuteAsync(new InsertEventCommand(@event));
 		// save to new file
 		File.Delete(filename);
 		await ctx.ExecuteAsync(new SaveDatabaseToFileCommand(filename));
 		// load file
-		var ctx2 = new FlitterContext($"Data Source={filename}");
+		await using var ctx2 = new FlitterContext($"Data Source={filename}");
 		var events = await ctx.ExecuteAsync(new GetEventsCommand());
 
 		Assert.True(File.Exists(filename));
