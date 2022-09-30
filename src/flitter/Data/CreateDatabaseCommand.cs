@@ -27,7 +27,9 @@ public class CreateDatabaseCommand : ICommand<bool>
 		const string CreateEventsTableStmt = @"CREATE TABLE Events (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	Guid TEXT NOT NULL,
-	CreatedAt TEXT NOT NULL
+	CreatedAt TEXT NOT NULL,
+	Type TEXT NOT NULL,
+	Data TEXT
 )";
 
 		var command = new CommandDefinition(CreateEventsTableStmt, cancellationToken: cancellationToken);

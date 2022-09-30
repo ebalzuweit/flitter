@@ -24,5 +24,6 @@ public class FlitterContextTests
 
 		Assert.True(File.Exists(filename));
 		Assert.NotEmpty(events);
+		Assert.Contains(@event, events);
 	}
 }

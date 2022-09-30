@@ -16,9 +16,9 @@ public class InsertEventCommand : ICommand
 	public async Task ExecuteAsync(SqliteConnection connection, CancellationToken cancellationToken = default)
 	{
 		const string InsertStmt = @"INSERT INTO Events
-(Guid, CreatedAt)
+(Guid, CreatedAt, Type, Data)
 VALUES
-(:Guid, :CreatedAt)";
+(:Guid, :CreatedAt, :Type, :Data)";
 
 		var command = new CommandDefinition(InsertStmt, parameters: _event, cancellationToken: cancellationToken);
 		await connection.ExecuteAsync(command).ConfigureAwait(false);
