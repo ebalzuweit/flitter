@@ -4,11 +4,11 @@ public sealed class EventHub
 {
 	private readonly List<EventSubscription> _subscriptions = new();
 
-	public async Task Publish(IEvent @event)
+	public Task Publish(IEvent @event)
 	{
 		var tasks = _subscriptions.Where(x => x.Predicate(@event))
 			.Select(x => x.Handler(@event));
-		await Task.WhenAll(tasks);
+		return Task.WhenAll(tasks);
 	}
 
 	public SubscriptionToken Subscribe(Func<IEvent, Task> handler, Func<IEvent, bool>? predicate = null)
