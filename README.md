@@ -9,11 +9,16 @@ An event hub.
 ``` csharp
 using flitter.Events;
 
+class Event : IEvent
+{
+	public Event() { }
+}
+
 // Create an EventHub
 var hub = new EventHub();
 // Create a subscription
 var token = hub.Subscribe(
-	handler: @event => Task.CompletedTask,
+	handler: @event => await DoSomethingAsync(),
 	predicate: @event => @event is Event);
 // Publish an event
 await hub.Publish(new Event());
