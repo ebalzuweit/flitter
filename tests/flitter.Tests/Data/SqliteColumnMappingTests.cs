@@ -15,7 +15,7 @@ public class SqliteColumnMappingTests
 		Assert.NotNull(mapping);
 		Assert.Equal(nameof(TestEntity.Id), mapping.Name);
 		Assert.Equal(typeof(int), mapping.Type);
-		Assert.Equal("INTEGER", mapping.SqliteType);
+		Assert.Equal("INTEGER", mapping.DbType);
 		Assert.True(mapping.NotNull);
 		Assert.True(mapping.IsPrimaryKey);
 		Assert.True(mapping.AutoIncrement);
@@ -31,7 +31,7 @@ public class SqliteColumnMappingTests
 		Assert.NotNull(mapping);
 		Assert.Equal(nameof(TestEntity.Message), mapping.Name);
 		Assert.Equal(typeof(string), mapping.Type);
-		Assert.Equal("TEXT", mapping.SqliteType);
+		Assert.Equal("TEXT", mapping.DbType);
 		Assert.True(mapping.NotNull);
 		Assert.False(mapping.IsPrimaryKey);
 		Assert.False(mapping.AutoIncrement);
@@ -47,7 +47,7 @@ public class SqliteColumnMappingTests
 		Assert.NotNull(mapping);
 		Assert.Equal(nameof(TestEntity.Value), mapping.Name);
 		Assert.Equal(typeof(float?), mapping.Type);
-		Assert.Equal("REAL", mapping.SqliteType);
+		Assert.Equal("REAL", mapping.DbType);
 		Assert.False(mapping.NotNull);
 		Assert.False(mapping.IsPrimaryKey);
 		Assert.False(mapping.AutoIncrement);

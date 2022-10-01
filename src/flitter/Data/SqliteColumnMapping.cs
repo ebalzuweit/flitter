@@ -3,11 +3,11 @@ using System.Reflection;
 
 namespace flitter.Data;
 
-public class SqliteColumnMapping
+public class SqliteColumnMapping : IDbColumnMapping
 {
 	public string Name { get; init; }
 	public Type Type { get; init; }
-	public string SqliteType { get; init; }
+	public string DbType { get; init; }
 	public bool NotNull { get; init; }
 	public bool IsPrimaryKey { get; init; }
 	public bool AutoIncrement { get; init; }
@@ -21,7 +21,7 @@ public class SqliteColumnMapping
 
 		Name = name;
 		Type = type ?? throw new ArgumentNullException(nameof(type));
-		SqliteType = GetSqliteColumnType(type);
+		DbType = GetSqliteColumnType(type);
 		NotNull = notNull;
 		IsPrimaryKey = isPrimaryKey;
 		AutoIncrement = autoIncrement;

@@ -23,7 +23,7 @@ public class SqliteQueryBuilder
 			if (i > 0)
 				sb.Append(", ");
 
-			sb.AppendFormat("{0} {1}", column.Name, column.SqliteType);
+			sb.AppendFormat("{0} {1}", column.Name, column.DbType);
 			if (column.NotNull)
 				sb.Append(" NOT NULL");
 			if (column.IsPrimaryKey)
