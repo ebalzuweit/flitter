@@ -81,3 +81,16 @@ await using FlitterContext ctx = new();
 var command = new ExampleCommand();
 var result = await ctx.ExecuteAsync(command);
 ```
+
+## FlitterContainer
+
+An IoC container.
+
+``` csharp
+using flitter.Data;
+using flitter.DependencyInversion;
+
+var flitter = new Flitter()
+	.Register<FlitterContext>();
+var ctx = flitter.Get<FlitterContext>();
+```
