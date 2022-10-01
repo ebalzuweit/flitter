@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src/flitter
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore src/flitter
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test tests/flitter.Tests --verbosity normal
