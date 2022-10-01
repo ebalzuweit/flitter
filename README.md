@@ -2,7 +2,7 @@
 
 ![flitter](https://github.com/ebalzuweit/flitter/actions/workflows/dotnet.yml/badge.svg)
 
-simple, in-memory tools
+simple, in-memory tools for rapid development
 
 ## EventHub
 
@@ -26,6 +26,19 @@ var token = hub.Subscribe(
 await hub.Publish(new Event());
 // Unsubscribe with token
 hub.Unsubscribe(token);
+```
+
+## FlitterContainer
+
+An IoC container.
+
+``` csharp
+using flitter.Data;
+using flitter.DependencyInversion;
+
+var flitter = new Flitter()
+  .Register<FlitterContext>();
+var ctx = flitter.Get<FlitterContext>();
 ```
 
 ## FlitterContext
@@ -87,17 +100,4 @@ class ExampleCommand : ICommand<int>
 await using FlitterContext ctx = new();
 var command = new ExampleCommand();
 var result = await ctx.ExecuteAsync(command);
-```
-
-## FlitterContainer
-
-An IoC container.
-
-``` csharp
-using flitter.Data;
-using flitter.DependencyInversion;
-
-var flitter = new Flitter()
-  .Register<FlitterContext>();
-var ctx = flitter.Get<FlitterContext>();
 ```
