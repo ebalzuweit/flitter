@@ -11,7 +11,7 @@ public class EventHubTests
 	}
 
 	[Fact]
-	public async Task E2E()
+	public async Task README_Test()
 	{
 		bool eventHandled = false;
 
@@ -27,5 +27,10 @@ public class EventHubTests
 		hub.Unsubscribe(token);
 
 		Assert.True(eventHandled, "Event not handled.");
+	}
+
+	internal class Event : IEvent
+	{
+		public Event() { }
 	}
 }

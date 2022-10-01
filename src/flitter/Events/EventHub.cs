@@ -24,5 +24,5 @@ public sealed class EventHub
 		return removed > 0;
 	}
 
-	private bool DefaultPredicate(Event @event) => true;
+	private bool DefaultPredicate(IEvent @event) => true;
 }
