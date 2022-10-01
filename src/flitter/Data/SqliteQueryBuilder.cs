@@ -2,14 +2,13 @@ using System.Text;
 
 namespace flitter.Data;
 
-public class SqliteQueryBuilder<T>
-	where T : new()
+public class SqliteQueryBuilder
 {
 	private readonly SqliteEntityMapping _mapping;
 
-	public SqliteQueryBuilder()
+	public SqliteQueryBuilder(Type type)
 	{
-		_mapping = new SqliteEntityMapping(typeof(T));
+		_mapping = new SqliteEntityMapping(type);
 	}
 
 	public string CreateTableScript()
