@@ -1,5 +1,7 @@
 # flitter
 
+![flitter](https://github.com/ebalzuweit/flitter/actions/workflows/dotnet.yml/badge.svg)
+
 simple, in-memory tools
 
 ## EventHub
