@@ -1,5 +1,8 @@
 using System.ComponentModel.DataAnnotations;
+using Dapper;
 using flitter.Data;
+using Microsoft.Data.Sqlite;
+
 namespace flitter.Tests.Data;
 
 public class FlitterContextTests
@@ -14,7 +17,7 @@ public class FlitterContextTests
 		await ctx.InsertEntityAsync<TestEntity>(new TestEntity("!@#$%"));
 
 		// load another context
-		await using var ctx2 = new FlitterContext();
+		await using FlitterContext ctx2 = new();
 		ctx2.RegisterEntity<TestEntity>();
 		var entities = await ctx2.GetEntitiesAsync<TestEntity>();
 
@@ -23,7 +26,7 @@ public class FlitterContextTests
 	}
 
 	[Fact]
-	public async Task README_Test()
+	public async Task README_ContextTest()
 	{
 		const string filename = "flitter.db";
 
@@ -39,6 +42,32 @@ public class FlitterContextTests
 		await using var ctx2 = new FlitterContext($"Data Source={filename}");
 		ctx2.RegisterEntity<Person>();
 		var people = await ctx2.GetEntitiesAsync<Person>();
+	}
+
+	[Fact]
+	public async Task README_CommandTest()
+	{
+		await using FlitterContext ctx = new();
+		var command = new TestCommand();
+		var result = await ctx.ExecuteAsync(command);
+
+		Assert.Equal(0, result);
+	}
+
+	internal class TestEntity
+	{
+		[Key, Required, AutoIncrement]
+		public int Id { get; init; }
+
+		public string? Message { get; init; }
+
+		public TestEntity() : this(null) { }
+
+		public TestEntity(string? message)
+		{
+			Id = -1;
+			Message = message;
+		}
 	}
 
 	internal class Person
@@ -57,19 +86,9 @@ public class FlitterContextTests
 		}
 	}
 
-	internal class TestEntity
+	internal class TestCommand : ICommand<int>
 	{
-		[Key, Required, AutoIncrement]
-		public int Id { get; init; }
-
-		public string? Message { get; init; }
-
-		public TestEntity() : this(null) { }
-
-		public TestEntity(string? message)
-		{
-			Id = -1;
-			Message = message;
-		}
+		public async Task<int> ExecuteAsync(SqliteConnection connection, CancellationToken cancellationToken = default)
+			=> await connection.ExecuteScalarAsync<int>("SELECT 0 FROM sqlite_master LIMIT 1");
 	}
 }
