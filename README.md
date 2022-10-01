@@ -1,10 +1,10 @@
 # flitter
 
-an event streaming library
+simple, in-memory tools
 
 ## EventHub
 
-A simple, in-memory event hub.
+An event hub.
 
 ``` csharp
 using flitter.Events;
@@ -21,24 +21,63 @@ await hub.Publish(new Event());
 hub.Unsubscribe(token);
 ```
 
-## FlutterContext
+## FlitterContext
 
-A SQLite context using a command-handler pattern.
+An object-database mapper
 
 ``` csharp
+using System.ComponentModel.DataAnnotations;
 using flitter.Data;
-using flitter.Events;
 
 const string filename = "flitter.db";
 
+class Person
+{
+	[Key, Required, AutoIncrement] public int Id { get; }
+	[Required] public string Name { get; init; }
+	public string? Surname { get; init; }
+
+	public Person() : this(string.Empty, null) { }
+
+	public Person(string name, string? surname)
+	{
+		Id = -1;
+		Name = name;
+		Surname = surname;
+	}
+}
+
 // setup in-memory database
 await using FlitterContext ctx = new();
-await ctx.ExecuteAsync(new CreateDatabaseCommand());
-await ctx.ExecuteAsync(new InsertEventCommand(new Event()));
-// save to new file
-File.Delete(filename);
-await ctx.ExecuteAsync(new SaveDatabaseToFileCommand(filename));
+ctx.RegisterEntity<Person>();
+// create table and entity
+await ctx.CreateTableAsync<Person>();
+await ctx.InsertEntityAsync<Person>(new Person("John", "Smith"));
+// save to file
+await ctx.Save(filename);
 // load file
 await using var ctx2 = new FlitterContext($"Data Source={filename}");
-var events = await ctx.ExecuteAsync(new GetEventsCommand());
+ctx2.RegisterEntity<Person>();
+var people = await ctx2.GetEntitiesAsync<Person>();
+```
+
+### ICommand
+
+The `ICommand` interface is used to interact with the database.
+`FlitterContext` creates a new connection when a command is executed, and will cleanup after execution.
+
+``` csharp
+using Dapper;
+using flitter.Data;
+using Microsoft.Data.Sqlite;
+
+class ExampleCommand : ICommand<int>
+{
+	public async Task<int> ExecuteAsync(SqliteConnection connection, CancellationToken cancellationToken = default)
+		=> await connection.ExecuteScalarAsync<int>("SELECT 0 FROM sqlite_master LIMIT 1");
+}
+
+await using FlitterContext ctx = new();
+var command = new ExampleCommand();
+var result = await ctx.ExecuteAsync(command);
 ```
