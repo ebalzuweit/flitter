@@ -11,15 +11,15 @@ using flitter.Events;
 
 class Event : IEvent
 {
-	public Event() { }
+  public Event() { }
 }
 
 // Create an EventHub
 var hub = new EventHub();
 // Create a subscription
 var token = hub.Subscribe(
-	handler: @event => await DoSomethingAsync(),
-	predicate: @event => @event is Event);
+  handler: @event => await DoSomethingAsync(),
+  predicate: @event => @event is Event);
 // Publish an event
 await hub.Publish(new Event());
 // Unsubscribe with token
@@ -38,18 +38,18 @@ const string filename = "flitter.db";
 
 class Person
 {
-	[Key, Required, AutoIncrement] public int Id { get; }
-	[Required] public string Name { get; init; }
-	public string? Surname { get; init; }
+  [Key, Required, AutoIncrement] public int Id { get; }
+  [Required] public string Name { get; init; }
+  public string? Surname { get; init; }
 
-	public Person() : this(string.Empty, null) { }
+  public Person() : this(string.Empty, null) { }
 
-	public Person(string name, string? surname)
-	{
-		Id = -1;
-		Name = name;
-		Surname = surname;
-	}
+  public Person(string name, string? surname)
+  {
+    Id = -1;
+    Name = name;
+    Surname = surname;
+  }
 }
 
 // setup in-memory database
@@ -78,8 +78,8 @@ using Microsoft.Data.Sqlite;
 
 class ExampleCommand : ICommand<int>
 {
-	public async Task<int> ExecuteAsync(SqliteConnection connection, CancellationToken cancellationToken = default)
-		=> await connection.ExecuteScalarAsync<int>("SELECT 0 FROM sqlite_master LIMIT 1");
+  public async Task<int> ExecuteAsync(SqliteConnection connection, CancellationToken cancellationToken = default)
+    => await connection.ExecuteScalarAsync<int>("SELECT 0 FROM sqlite_master LIMIT 1");
 }
 
 await using FlitterContext ctx = new();
@@ -96,6 +96,6 @@ using flitter.Data;
 using flitter.DependencyInversion;
 
 var flitter = new Flitter()
-	.Register<FlitterContext>();
+  .Register<FlitterContext>();
 var ctx = flitter.Get<FlitterContext>();
 ```
