@@ -6,6 +6,7 @@ public class SqliteEntityMapping
 {
 	public string TableName { get; init; }
 	public SqliteColumnMapping[] Columns { get; init; }
+	public SqliteColumnMapping? PrimaryKey { get; init; }
 
 	public SqliteEntityMapping(Type type)
 	{
@@ -18,6 +19,7 @@ public class SqliteEntityMapping
 
 		TableName = type.Name;
 		Columns = GetColumnMappings(type).ToArray();
+		PrimaryKey = Columns.Where(x => x.IsPrimaryKey).SingleOrDefault();
 	}
 
 	private IEnumerable<SqliteColumnMapping> GetColumnMappings(Type type)
