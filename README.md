@@ -9,13 +9,13 @@ An event hub.
 ``` csharp
 using flitter.Events;
 
-class Event : IEvent
+class Event
 {
   public Event() { }
 }
 
 // Create an EventHub
-var hub = new EventHub();
+var hub = new EventHub<Event>();
 // Create a subscription
 var token = hub.Subscribe(
   handler: @event => await DoSomethingAsync(),

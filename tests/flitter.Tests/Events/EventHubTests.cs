@@ -7,7 +7,7 @@ public class EventHubTests
 	[Fact]
 	public void Ctor()
 	{
-		var hub = new EventHub();
+		var hub = new EventHub<Event>();
 	}
 
 	[Fact]
@@ -16,7 +16,7 @@ public class EventHubTests
 		bool eventHandled = false;
 
 		// Create an EventHub
-		var hub = new EventHub();
+		var hub = new EventHub<Event>();
 		// Create a subscription
 		var token = hub.Subscribe(
 			handler: @event => { eventHandled = true; return Task.CompletedTask; },
@@ -29,7 +29,7 @@ public class EventHubTests
 		Assert.True(eventHandled, "Event not handled.");
 	}
 
-	internal class Event : IEvent
+	internal class Event
 	{
 		public Event() { }
 	}
