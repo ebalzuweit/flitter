@@ -1,6 +1,6 @@
 namespace flitter.Events;
 
-public sealed class EventHub<T>
+public class EventHub<T>
 {
 	private readonly List<EventSubscription<T>> _subscriptions = new();
 

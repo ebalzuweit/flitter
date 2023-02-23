@@ -13,5 +13,5 @@ public sealed class EventSubscription<T>
 		Token = SubscriptionToken.New();
 	}
 
-	private bool DefaultPredicate(T @event) => true;
+	private static bool DefaultPredicate(T @event) => true;
 }
