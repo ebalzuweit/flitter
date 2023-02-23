@@ -59,4 +59,16 @@ public class FlitterContainerTests
 		Assert.NotNull(resolved);
 		Assert.IsType<TestDependency>(resolved);
 	}
+
+	[Fact]
+	public void Get_ResolvesService_IfBaseTypeRegistered()
+	{
+		var container = new FlitterContainer()
+			.RegisterImplementations<ITestInterface>();
+
+		var resolved = container.Get<TestDependency>();
+		
+		Assert.NotNull(resolved);
+		Assert.IsType<TestDependency>(resolved);
+	}
 }

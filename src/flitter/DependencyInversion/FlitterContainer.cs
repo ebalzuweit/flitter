@@ -8,7 +8,7 @@ namespace flitter.DependencyInversion;
 /// <summary>
 /// Dependency-inversion container for type registration.
 /// </summary>
-public sealed class FlitterContainer : IDisposable
+public class FlitterContainer : IDisposable
 {
 	private readonly ServiceProvider _provider;
 	private readonly IWindsorContainer _container;
@@ -57,6 +57,30 @@ public sealed class FlitterContainer : IDisposable
 		where TImp : class, TAbs
 	{
 		_container.Register(Component.For<TAbs>().ImplementedBy<TImp>().LifestyleTransient());
+		return this;
+	}
+
+	/// <inheritdoc cref="RegisterImplementations{T}(Assembly)"/>
+	public FlitterContainer RegisterImplementations<T>()
+		=> RegisterImplementations<T>(Assembly.GetAssembly(typeof(T)))
+		   ?? throw new InvalidOperationException($"Failed to locate assembly for type {nameof(T)}.");
+
+	/// <summary>
+	/// Register types implementing <typeparamref name="T"/> as transient services.
+	/// </summary>
+	/// <remarks>
+	/// Services are registered to themselves; so must be resolved by the inherited type, not <typeparamref name="T"/>.
+	/// </remarks>
+	/// <param name="assembly">Assembly to search for implemented types.</param>
+	/// <typeparam name="T">Base type for services.</typeparam>
+	/// <returns>This container, for call-chaining.</returns>
+	public FlitterContainer RegisterImplementations<T>(Assembly assembly)
+	{
+		// https://github.com/castleproject/Windsor/blob/master/docs/registering-components-by-conventions.md
+		_container.Register(Classes.FromAssembly(assembly)
+			.BasedOn<T>()
+			.WithService.Self()
+			.LifestyleTransient());
 		return this;
 	}
 
