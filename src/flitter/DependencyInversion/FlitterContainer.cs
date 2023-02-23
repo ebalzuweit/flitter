@@ -35,6 +35,18 @@ public class FlitterContainer : IDisposable
 	}
 
 	/// <summary>
+	/// Register a singleton service of type <typeparamref name="T"/>.
+	/// </summary>
+	/// <typeparam name="T">Type of the service being registered.</typeparam>
+	/// <returns>This container, for call-chaining.</returns>
+	public FlitterContainer RegisterSingleton<T>()
+		where T : class
+	{
+		_container.Register(Component.For<T>().LifestyleSingleton());
+		return this;
+	}
+
+	/// <summary>
 	/// Register a service of type <typeparamref name="T"/> that resolves to the provided instance.
 	/// </summary>
 	/// <param name="instance">The instance to resolve.</param>
