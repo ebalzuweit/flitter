@@ -3,7 +3,7 @@ using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 
-namespace flitter.DependencyInversion;
+namespace flitter.DependencyInjection;
 
 /// <summary>
 /// Dependency-inversion container for type registration.

@@ -1,6 +1,6 @@
-using flitter.DependencyInversion;
+using flitter.DependencyInjection;
 
-namespace flitter.Tests.DependencyInversion;
+namespace flitter.Tests.DependencyInjection;
 
 public class FlitterContainerTests
 {
