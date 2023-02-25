@@ -1,7 +1,7 @@
-﻿using flitter.DependencyInversion;
+﻿using flitter.DependencyInjection;
 using Moq;
 
-namespace flitter.Tests.DependencyInversion;
+namespace flitter.Tests.DependencyInjection;
 
 public class ServiceProviderTests
 {

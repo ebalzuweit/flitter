@@ -1,4 +1,4 @@
-﻿namespace flitter.DependencyInversion;
+﻿namespace flitter.DependencyInjection;
 
 /// <summary>
 /// Resolves services from the <see cref="FlitterContainer"/>.

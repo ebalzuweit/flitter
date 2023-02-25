@@ -1,4 +1,4 @@
-﻿namespace flitter.Tests.DependencyInversion;
+﻿namespace flitter.Tests.DependencyInjection;
 
 public record TestDependency() : ITestInterface
 {
